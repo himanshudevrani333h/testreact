@@ -15,7 +15,18 @@ class Dashboard extends React.Component {
     })
   }
   render() {
-    
+
+    let arr=[];
+
+    let allData = this.state.allData
+    for( let i =0; i<allData.length; i++){
+        if(allData[i].name.toLowerCase() == this.props.ip.toLowerCase() && allData[i].animal.toLowerCase() == this.props.drop1.toLowerCase() && allData[i].breed.toLowerCase() == this.props.drop2.toLowerCase()){
+          arr.push(allData[i]);
+        }
+    }
+    if(arr.length >0){
+      this.state.allData = arr;
+    }
     return (
       <table class="table">
         <thead>

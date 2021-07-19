@@ -11,22 +11,14 @@ class Search extends React.Component {
         return el.json();
       })
       .then((json) => {
-        this.setState({srch:json});
-       
+        this.setState({ srch: json });
       });
   }
 
-  
-
   render() {
-    // let breeddata = this.props.breeddta;
-    // console.log(breeddata);
-    let d1="";
-    let d2 ="";
-
-    const handleSelect=(e)=>{
-      console.log(e);
-    }
+    let drop1 = "";
+    let drop2 = "";
+    let ip = "";
     return (
       <div class="input-group">
         <input
@@ -35,9 +27,13 @@ class Search extends React.Component {
           placeholder="Search"
           aria-label="Search"
           aria-describedby="search-addon"
+          onChange={(el) => {
+            // console.log(el.currentTarget.value);
+            ip = el.currentTarget.value;
+          }}
         />
 
-        <div class="dropdown" className="pl-2" >
+        <div class="dropdown" className="pl-2">
           <button
             class="btn btn-secondary dropdown-toggle"
             type="button"
@@ -45,23 +41,23 @@ class Search extends React.Component {
             data-toggle="dropdown"
             aria-haspopup="true"
             aria-expanded="false"
-            
           >
             Animal Type
           </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" onSelect={handleSelect} >
-            {
-                
-               this.state.srch.map((el) => {
-                return (
-                
-                  <a class="dropdown-item" href="#">
-                    {el.animal}
-                  </a>
-                );
-              })
-            }
-
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            {this.state.srch.map((el) => {
+              return (
+                <a
+                  class="dropdown-item"
+                  href="#"
+                  onClick={(el) => {
+                    drop1 = el.currentTarget.innerText;
+                  }}
+                >
+                  {el.animal}
+                </a>
+              );
+            })}
           </div>
         </div>
 
@@ -76,22 +72,26 @@ class Search extends React.Component {
           >
             Breed Type
           </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" onClick={(el)=>{
-            d2= el.value;
-          }}>
-            {this.props.breeddta.map((el)=>{
-              return(
-                <a class="dropdown-item" href="#">
-                {el.breed}
-              </a>
-              )
-            })
-          }
-           
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            {this.props.breeddta.map((el) => {
+              return (
+                <a
+                  class="dropdown-item"
+                  href="#"
+                  onClick={(el) => {
+                    drop2 = el.currentTarget.innerText;
+                  }}
+                >
+                  {el.breed}
+                </a>
+              );
+            })}
           </div>
         </div>
 
-        <button type="button" class="btn btn-outline-primary">
+        <button type="button" class="btn btn-outline-primary" onClick={()=>{
+          this.props.receiveip(ip,drop1,drop2)
+        }}>
           Submit
         </button>
       </div>
